@@ -1,0 +1,16 @@
+fix fight ui
+add more armor 
+add weapons and adjust attack accordingly
+add shield and adjust enemydmg accordingly
+add shopkeeper event
+add banking system if possible
+add thievery event
+add damsel in distress event
+DONE add armor/weapon picker and lister 
+more specialised graphics
+
+
+VERY MUCH IN THE FUTURE PLANS:
+add a proper dungeon map and map out the grid mover custom
+worlds - asgard, midgard, tartarus ( custom map and not a fkn 3x3 square)
+game updater directly from github repo

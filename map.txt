@@ -1,0 +1,11 @@
+main.py - game loop
+graphics - sprites 
+grid - grid and move function
+messages - replies
+randomiser - randomiser function
+start sequence - main menu
+variables - main storage
+checks - checks for low money / health event
+playerhud - menu
+fight_mechanics - the b**** part but its kinda done now
+armory - armor viewer / equipper 
