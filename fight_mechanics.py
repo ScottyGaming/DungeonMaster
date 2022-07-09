@@ -5,6 +5,9 @@ import graphics
 from time import sleep
 import os
 
+def clrscrn():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
 def xperience():
     if variables.enemyhp <= 0:
         if index == 1:
@@ -46,8 +49,9 @@ def villain():
       loss = random.choice(variables.attackrange[5])
       
     variables.health['hp'] = variables.health['hp'] - loss
-    print(f"\n--- ENEMY LOG ---\n{enemyname} attacked you! You lost {loss} hp!\n--- --- -- --- --- --- --- ---")
-    fight_switch = 1
+    return f"{enemyname} attacked you! You lost {loss} hp!"
+    
+    
 
 
 def hero():
@@ -71,47 +75,47 @@ def hero():
             ))
         if inp == 4:
             run_switch = 1
-
+            return f"You have escaped from {enemyname}"
         elif inp == 3:
             if len(variables.consumables) > 0:
                 for item in variables.consumables:
                     print(f'{item} : {variables.consumables[item]}')
                 from consumeitem import useitemduringfight
-                useitemduringfight()
+                return useitemduringfight()
             else:
-                print("\n--- PLAYER LOG ---\nYou have no consumables you can use!\n--- --- -- --- --- --- --- ---")
-                graphics.spacer()
+
+                return "You have no consumables you can use!"
+
 
         elif inp == 2:
-            parryvalues = choice(variables.armordict['helm'][variables.equipped['helm']][0])            +choice(variables.armordict['chestplate'][variables.equipped['chestplate']][0])+choice(variables.armordict['leggings'][variables.equipped['leggings']][0])+choice(variables.armordict['boots'][variables.equipped['boots']][0])+choice(variables.armordict['vambraces'][variables.equipped['vambraces']][0])+choice(variables.armordict['shield'][variables.equipped['shield']][0])
+            parryvalues = choice(variables.armordict['helm'][variables.equipped['helm']][0])+choice(variables.armordict['chestplate'][variables.equipped['chestplate']][0])+choice(variables.armordict['leggings'][variables.equipped['leggings']][0])+choice(variables.armordict['boots'][variables.equipped['boots']][0])+choice(variables.armordict['vambraces'][variables.equipped['vambraces']][0])+choice(variables.armordict['shield'][variables.equipped['shield']][0])
             if parryvalues == 0:
               parryvalues = choice(range(1,11))
             if variables.health['hp'] + parryvalues < variables.health['hplimit']:
                 variables.health['hp'] += parryvalues
-                print(f"\n--- PLAYER LOG ---\nYou parried and regained {parryvalues} hp\n--- --- -- --- --- --- --- ---")
-                graphics.spacer()
+
+                return f"You parried and regained {parryvalues} hp\n"
             else:
                 variables.health['hp'] = variables.health['hplimit']
-                print(f"\n--- PLAYER LOG ---\nYou parried and regained all of your hp\n--- --- -- --- --- --- --- ---")
-                graphics.spacer()
+
+                return f"You parried and regained all of your hp\n"
 
         elif inp == 1:
             e = random.randint(10,50)
             if enemyhp - e > 0:
                 enemyhp -= e
-                print(
-                    f"\n--- PLAYER LOG ---\nYou attacked the {enemyname}! {enemyname} lost {e} hp\n--- --- -- --- --- --- --- ---")
-                graphics.spacer()
+          
+                return f"You attacked the {enemyname}! {enemyname} lost {e} hp\n"
             else:
                 enemyhp = 0
-                print(
-                    f"\n--- PLAYER LOG ---\nYou attacked the {enemyname}! {enemyname} lost all of their hp\n--- --- -- --- --- --- --- ---"
-                )
-                graphics.spacer()
+
+                return f"You attacked the {enemyname}! {enemyname} lost all of their hp\n"
         fight_switch = 0
     except ValueError as ve:
         print("Invalid option! Choose again!")
-
+        sleep(1)
+        clrscrn()
+        hero()
 
 def encounter():
     global enemyhp, enemyname
@@ -134,7 +138,7 @@ def encounter():
     enemyname = random.choice(variables.enemies[index])
     enemyhp = variables.loot[index][0]
     coin = variables.loot[index][2]
-    os.system('cls' if os.name == 'nt' else 'clear')
+    clrscrn()
     print(f"{enemyname}\nHP:{enemyhp}")
     print("        __      _______ ")     
     print("        \ \    / / ____|")
@@ -146,30 +150,34 @@ def encounter():
     print(f"                          HP:{variables.health['hp']}")
     sleep(2)
     if fight_switch == 1:
-      os.system('cls' if os.name == 'nt' else 'clear')
-    
+      clrscrn()
+    elif fight_switch == 0:
+        print('--- Log ---')
 
     while enemyhp > 0 and variables.health['hp'] > 0:
         global run_switch
         if run_switch == 0:
+ 
             if fight_switch == 0:
-                villain()
+                print(f'Enemy: {villain()}')
+                fight_switch = 1
                 sleep(2)
-                os.system('cls' if os.name == 'nt' else 'clear')
+                clrscrn()
             elif fight_switch == 1:
-                hero()
+                print(f'\n--- Log ---\nPlayer: {hero()}')
+                fight_switch = 0
                 sleep(2)
+            
         else:
-            print(f"You have escaped from {enemyname}")
             sleep(2)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            clrscrn()
             from playerhud import gridprinter
             gridprinter()
             run_switch = 0
             break
 
         if enemyhp <= 0:
-            os.system('cls' if os.name == 'nt' else 'clear')
+            clrscrn()
             print(''' __     __          __          ___       
  \ \   / /          \ \        / (_)      
   \ \_/ /__  _   _   \ \  /\  / / _ _ __  
@@ -194,7 +202,7 @@ def encounter():
             xperience()
             print("-------------------------------------------")
             sleep(2)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            clrscrn()
             from playerhud import gridprinter
             gridprinter()
             break
@@ -212,7 +220,7 @@ def encounter():
             print(f"You lost {coinlose} coins!")
             print("-----------------------------------------------------------------")
             sleep(2)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            clrscrn()
             from playerhud import gridprinter
             gridprinter()
             break

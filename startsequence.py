@@ -19,7 +19,9 @@ def charpicker():
                                                                
                                                                ''')
     print("--- Enter you Gender (this affects choices and obtainable gear) ---  ")
-    x=input(f'Choosable Genders: {variables.genlist}\n: ')
+    for i in variables.genlist:
+      print(i,sep=', ')
+    x=input(f'Choice: ')
     if x == None:
       print(f"You have to choose a Gender!")
       sleep(1)
@@ -38,27 +40,8 @@ def charpicker():
     
       
 def story():
-  storylst = ["Tullius: Hey, you. You're finally awake",
-              "Player: Who are you?",
-              "Tullius: I am Tullius! Your guide through this wonderful enchanted land!",
-              "Player: Oh nice! I have a guide!",
-              "Tullius: Damn kobolds keep robbing innocent travelers right? Here have some berries!",
-              "Player: Thanks!",
-              "Tullius: By the way , are you a rogue or even a warrior perhaps?",
-              "Player: Well yes I am a warrior! , How did you find that out?",
-              "Tullius: You have armor stowed away in your bag! I can sense anything hidden!",
-              "Player: ... Damm, Thats a neat trick! No use hiding it once it's found out!",
-              "Tullius: I know right! Looks like we can get started!",
-              "Tullius: Press 'WASD' to move (Thats how you get around)",
-              "Tullius: Press 'I' to access your inventory (Thats how you store and use consumables!)",
-              "Tullius: Press 'V' to view your stats (A regular health check is good!)",
-              "Tullius: Press 'M' if you want to open the pause menu! (You'll need it)",
-              "Tullius: Press 'Z' if you want to open the Armory! (You can view and equip Armor and Weapons!)",
-              "Tullius: Press 'B' if you want to open the Shop! (You can buy armor pieces here!)",
-              "Tullius: Press 'T' for summoning me! I'll give you tips that are useful for your journey!",
-              "Player: Thanks for the starting tips! I'm sure that is helpful!",
-              "Tullius: Well then, off you go. Slay monsters and bring peace to this once peaceful land!",
-              "*distant growling and destruction can be heard in the background"]
+  import messages
+  storylst = messages.storylst
   
   for i in range(0,len(storylst)):
     print('''  _____       _                 _            _   _             
