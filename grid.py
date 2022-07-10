@@ -4,7 +4,7 @@ import os
 from time import sleep
 
 def gridprinter():
-    print("\nCurrent Position:\n")
+    graphics.print_centre("\nWorld Map:\n")
     if currentpos['grid'] == 'gridA':
         print(gridA[currentpos['pos']])
     elif currentpos['grid'] == 'gridB':
@@ -35,8 +35,8 @@ currentpos = {'grid': 'gridB', 'pos': 2}
 def mover(move):
     global currentpos
     from randomiser import randomiser
-    os.system('cls' if os.name == 'nt' else 'clear')
-    choice(graphics.list_of_graphics)()
+    graphics.clrscrn()
+    graphics.dungeon()
     if move.lower() == 'w':
         print("\nCurrent Position:\n")
         if currentpos['grid'] == 'gridA':

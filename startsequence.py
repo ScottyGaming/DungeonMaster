@@ -5,58 +5,40 @@ from random import choice
 from variables import load
 from time import sleep
 key = 0
+
+
 #---Start---#
 def charpicker():
   import variables
   
   while True:
-    print('''  _____       _                 _            _   _             
- |_   _|     | |               | |          | | (_)            
-   | |  _ __ | |_ _ __ ___   __| |_   _  ___| |_ _  ___  _ __  
-   | | | '_ \| __| '__/ _ \ / _` | | | |/ __| __| |/ _ \| '_ \ 
-  _| |_| | | | |_| | | (_) | (_| | |_| | (__| |_| | (_) | | | |
- |_____|_| |_|\__|_|  \___/ \__,_|\__,_|\___|\__|_|\___/|_| |_|
-                                                               
-                                                               ''')
-    print("--- Enter you Gender (this affects choices and obtainable gear) ---  ")
+    graphics.introduction()
+    graphics.print_centre("--- Enter you Gender (this affects choices and obtainable gear) ---  ")
     for i in variables.genlist:
-      print(i,sep=', ')
+      graphics.print_centre(i)
     x=input(f'Choice: ')
     if x == None:
       print(f"You have to choose a Gender!")
-      sleep(1)
     if x.lower() == 'female':
-      variables.gender = 'female'
-      print(f"You have chosen {variables.gender}! You cannot change this manually again!")
+      variables.gender = 'Female'
+      print(f"You have chosen {variables.gender}!")
       sleep(1)
       break
     elif x.lower() == 'male':
-      variables.gender = 'male'
-      print(f"You have chosen {variables.gender}! You cannot change this manually again!")
+      variables.gender = 'Male'
+      print(f"You have chosen {variables.gender}!")
       sleep(1)
       break
     else:
-      os.system('cls' if os.name == 'nt' else 'clear')
-    
-      
+      graphics.clrscrn()
 def story():
   import messages
   storylst = messages.storylst
-  
-  for i in range(0,len(storylst)):
-    print('''  _____       _                 _            _   _             
- |_   _|     | |               | |          | | (_)            
-   | |  _ __ | |_ _ __ ___   __| |_   _  ___| |_ _  ___  _ __  
-   | | | '_ \| __| '__/ _ \ / _` | | | |/ __| __| |/ _ \| '_ \ 
-  _| |_| | | | |_| | | (_) | (_| | |_| | (__| |_| | (_) | | | |
- |_____|_| |_|\__|_|  \___/ \__,_|\__,_|\___|\__|_|\___/|_| |_|
-                                                               
-                                                               ''')
-    for j in storylst[i]:     
-      print(j,end='')
-    print()
-    input("\nPress any key to continue")
-    os.system('cls' if os.name == 'nt' else 'clear')
+  for j in storylst:     
+      graphics.introduction()
+      graphics.print_centre(j)
+      input("\nPress any key to continue")
+      graphics.clrscrn()
   
 
 #######################################################################################################################
@@ -71,7 +53,11 @@ def savepicker():
           
     while True:
         graphics.floppy()
-        cho = input("-- SAVE MANAGER -- \n1: load save\n2: list saves\n3: Exit Menu\nEnter choice: ")
+        graphics.print_centre("-- SAVE MANAGER --")
+        graphics.print_centre("1: load save")
+        graphics.print_centre(" 2: list saves")
+        graphics.print_centre("3: Exit Menu")
+        cho = input("Enter choice: ")
         graphics.spacer()
       
         if cho == '1':
@@ -88,23 +74,23 @@ def savepicker():
           else:
             print("Invalid Save!")
             sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             
         elif cho == '2':
           print('-- Save List --')
           for i in files:
             print(i[:-4:])
           input("Press any key to go back to save menu!")
-          os.system('cls' if os.name == 'nt' else 'clear')
+          graphics.clrscrn()
           
         elif cho == '3':
-          os.system('cls' if os.name == 'nt' else 'clear')
+          graphics.clrscrn()
           break
 
         else:
           print("Invalid Choice!")
           sleep(1)
-          os.system('cls' if os.name == 'nt' else 'clear')
+          graphics.clrscrn()
       
 #######################################################################################################################  
 #######################################################################################################################
@@ -112,50 +98,53 @@ def savepicker():
 def startmenu():
     while True:
       graphics.logo()
-      x=input("\n1) New Game\n2) Load Game\n3) Quit Game\n: ")
+      graphics.print_centre("|  1) New Game   |")
+      graphics.print_centre("|  2) Load Game  |")
+      graphics.print_centre("|  3) Quit Game  |")
+      x=input(": ")
       if x=='1':
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         story()
         charpicker()
-        os.system('cls' if os.name == 'nt' else 'clear')
-        choice(graphics.list_of_graphics)()
+        graphics.clrscrn()
+        graphics.dungeon()
         from grid import gridB,currentpos
         print(gridB[currentpos['pos']])
         break
         
       elif x=='2':
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         savepicker()
         if key == 1:
           break
 
       elif x=='3':
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         os._exit(0)
       else:
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         
 def pausemenu():
     while True:
       graphics.logo()
       x=input("-- PAUSE MENU --\n\n1) New Game\n2) Load Game\n3) Save Game\n4) Back to Game\n5) Quit Game\n: ")
       if x=='1':
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         story()
-        os.system('cls' if os.name == 'nt' else 'clear')
-        choice(graphics.list_of_graphics)()
+        graphics.clrscrn()
+        graphics.dungeon()
         from grid import gridB,currentpos
         print(gridB[currentpos['pos']])
         break
         
       elif x=='2':
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         savepicker()
         if key == 1:
           break
 
       elif x=='5':
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         os._exit(0)
       elif x=='4':
         break
@@ -163,20 +152,23 @@ def pausemenu():
         import variables
         variables.save()
         sleep(1)
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         
       else:
         print("Invalid Choice!")
         sleep(1)
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         
 def startsequence():
     graphics.logo()
-    input("\nPress any button except the power off button to start!\n")
-    os.system('cls' if os.name == 'nt' else 'clear')
+    print()
+    graphics.print_centre("Credits: Scottminer22 Gaming#2306")
+    graphics.print_centre("Press any key to start!")
+    input()
+    graphics.clrscrn()
     startmenu()
-    os.system('cls' if os.name == 'nt' else 'clear')
-    choice(graphics.list_of_graphics)()
+    graphics.clrscrn()
+    graphics.dungeon()
     from grid import gridB,currentpos
     print("\nCurrent Position:\n")
     print(gridB[currentpos['pos']])

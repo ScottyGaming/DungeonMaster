@@ -1,7 +1,8 @@
 import os
+import graphics
 def debugmenu():
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         print('''  _____  ______ ____  _    _  _____ 
  |  __ \|  ____|  _ \| |  | |/ ____|
  | |  | | |__  | |_) | |  | | |  __ 
@@ -42,7 +43,7 @@ def debugmenu():
             import events
             events.thievery()
         elif inp == 'undebug' or inp == 'quit' or inp == 'exit':
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             from playerhud import gridprinter
             gridprinter()
             break

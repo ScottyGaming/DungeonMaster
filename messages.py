@@ -2,7 +2,7 @@ randomitemfind = [
     'lying near the wall', 'inside a cavity', 'on the ground',
     'mysteriously in your pocket', 'with the help of a torch on the wall', 'on a ledge', 'near a floor crack', 'in the bushes', 'on the grass', 'inside an abandoned house', 'inside the cavern', 'in the water', 'in the stream'
 ]
-noitemfind = "\n-- You thought you spotted something but there wasnt anything there! --"
+noitemfind = "-- You thought you spotted something but there wasnt anything there! --"
 genericnothing = "Nothing Extraordinary Happened"
 outofbounds = "You tried to go to out of bounds!"
 completeheal = "You have been healed completely"

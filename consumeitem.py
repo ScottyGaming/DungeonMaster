@@ -2,50 +2,24 @@ import graphics
 
 def useitem():
   try:
-    from variables import consumabledict,consumables,health,bonus,enemyname,enemyhp
+    from variables import consumabledict,consumables,health
     from random import choice
     inp = input("Enter name of item you want to use: ")
     if consumables[inp] > 0:
-        if inp == 'potion':
-          if health['hp']!=health['hplimit']:
-                if health['hp']+consumabledict['potion'] <= health['hplimit']:
-                  health['hp']+=consumabledict['potion']
-                  print(f"You have regained {consumabledict['potion']} HP!")
-                  graphics.spacer()
+      if inp in consumabledict and inp!= 'poison':
+        if health['hp']!=health['hplimit']:
+                if health['hp']+consumabledict[inp] <= health['hplimit']:
+                  health['hp']+=consumabledict[inp]
+                  consumables[inp]-=1
+                  return f"You have regained {consumabledict[inp]} HP!"
+
                 else:
                   health['hp']=health['hplimit']
-                  print("You have been healed completely")
-                  graphics.spacer()
-                consumables['potion']-=1
-          else:
-            print("Your HP is already full!")
-        elif inp == "berry":
-          if health['hp']!=health['hplimit']:
-                if health['hp']+consumabledict['berry'] <= health['hplimit']:
-                  health['hp']+=consumabledict['berry']
-                  print(f"You have regained {consumabledict['berry']} HP!")
-                  graphics.spacer()
-                else:
-                  health['hp']=health['hplimit']
-                  print("You have been healed completely")
-                  graphics.spacer()
-                consumables['berry']-=1
-          else:
-            print("Your HP is already full!")
-        elif inp == "water":
-          if health['hp']!=health['hplimit']:
-                if health['hp']+consumabledict['water'] <= health['hplimit']:
-                  health['hp']+=consumabledict['water']
-                  print(f"You have regained {consumabledict['water']} HP!")
-                  graphics.spacer()
-                else:
-                  health['hp']=health['hplimit']
-                  print("You have been healed completely")
-                  graphics.spacer()
-                consumables['water']-=1
-          else:
-            print("Your HP is already full!")
-        elif inp == "poison":
+                  consumables[inp]-=1
+                  return "You have been healed completely"
+        else:
+            return "Your HP is already full!"
+      elif inp == "poison":
                 if health['hp']-consumabledict['poison'] >= health['hplimit']:
                   health['hp']-=consumabledict['poison']
                   print(f"You have lost {consumabledict['poison']} HP!")
@@ -55,80 +29,47 @@ def useitem():
                   print(f"The poison races through your veins leaving you with {health['hp']} HP!")
                   graphics.spacer()
                 consumables['poison']-=1
-        else:
+      else:
           print("You didnt enter a valid option! Try Again!")
     else:
         print("Your inventory is empty!")
-  except KeyError as whythefwouldyoutypethat:
+  except KeyError:
     print("This item doesnt exist!")
     
 def useitemduringfight():
   global enemyhp,enemyname,fight_switch
   try:
-    from variables import consumabledict,consumables,health,bonus,enemyname,enemyhp,fight_switch,run_switch
+    from variables import consumabledict,consumables,health,enemyname,enemyhp,fight_switch
     from random import choice
-    print("--- Fight Inventory --")
     inp = input("Enter name of item you want to use: ")
     if consumables[inp] > 0:
-      if inp == 'potion':
+      if inp in consumabledict and inp!= 'poison':
         if health['hp']!=health['hplimit']:
-              if health['hp']+consumabledict['potion'] <= health['hplimit']:
-                health['hp']+=consumabledict['potion']
-                consumables['potion']-=1
-                return f"You have regained {consumabledict['potion']} HP!"
+                if health['hp']+consumabledict[inp] <= health['hplimit']:
+                  health['hp']+=consumabledict[inp]
+                  consumables[inp]-=1
+                  return f"You have regained {consumabledict[inp]} HP!"
 
-              else:
-                health['hp']=health['hplimit']
-                consumables['potion']-=1
-                return "You have been healed completely"
+                else:
+                  health['hp']=health['hplimit']
+                  consumables[inp]-=1
+                  return "You have been healed completely"
         else:
-          return "Your HP is already full!"
-      elif inp == "berry":
-        if health['hp']!=health['hplimit']:
-              if health['hp']+consumabledict['berry'] <= health['hplimit']:
-                health['hp']+=consumabledict['berry']
-                consumables['berry']-=1
-                return f"You have regained {consumabledict['berry']} HP!"
-
-              else:
-                health['hp']=health['hplimit']
-                consumables['berry']-=1
-                return "You have been healed completely"
-
-              
-        else:
-          return "Your HP is already full!"
-      elif inp == "water":
-        if health['hp']!=health['hplimit']:
-              if health['hp']+consumabledict['water'] <= health['hplimit']:
-                health['hp']+=consumabledict['water']
-                consumables['water']-=1
-                return f"You have regained {consumabledict['water']} HP!"
-              
-              else:
-                health['hp']=health['hplimit']
-                consumables['water']-=1
-                return "You have been healed completely"
-
-              
-        else:
-          return "Your HP is already full!"
+            return "Your HP is already full!"
       elif inp == "poison":
-              if enemyhp > 0:
-                enemyhp-=consumabledict['poison']
-                consumables['poison']-=1
-                return f"{enemyname} lost {consumabledict['poison']} HP!"
+                if enemyhp > 0:
+                  enemyhp-=consumabledict['poison']
+                  consumables['poison']-=1
+                  return f"{enemyname} lost {consumabledict['poison']} HP!"
 
-              else:
-                enemyhp = choice[5,10,15,20,25]
-                consumables['poison']-=1
-                return f"The poison races through {enemyname}'s veins leaving them with {enemyhp} HP!"
-
+                else:
+                  enemyhp = choice[5,10,15,20,25]
+                  consumables['poison']-=1
+                  return f"The poison races through {enemyname}'s veins leaving them with {enemyhp} HP!"
       else:
-        print("You didnt enter a valid option! Try Again!")
-        
+          print("You didnt enter a valid option! Try Again!")
     else:
       return "You don't have item(s)!"
-  except KeyError as whythefwouldyoutypethat:
+  except KeyError:
     print("This item doesnt exist!")
   fight_switch = 0

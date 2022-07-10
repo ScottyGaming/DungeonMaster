@@ -36,7 +36,7 @@ bonus = {'bonushp':0}
 health = {'hp':100,'hplimit':100+bonus['bonushp']}
 
 #inventory
-genlist = ['male','female']
+genlist = ['Male','Female']
 gender = None
 money = {'gold':0,'silver':0}
 
@@ -99,3 +99,4 @@ def load(filename):
       gender = data['gender']
     except KeyError as oldsave:
       print("Old save file detected! Newer Variables will not load!")
+      

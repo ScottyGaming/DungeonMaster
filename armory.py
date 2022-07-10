@@ -127,7 +127,7 @@ def armoreq():
 def equippedarmor():
   while True:
     import variables
-    os.system('cls' if os.name == 'nt' else 'clear')
+    graphics.clrscrn()
     print(f"Gender : {variables.gender}")
     print("-- Equipped Armor -- \n")
     print(f"                     _A_")
@@ -154,7 +154,7 @@ def equippedarmor():
     from variables import equipped
     print("-- Armor Station --")
     x=input("1) Equip Armor\n2) De-Equip Armor\n3) Exit\n: ")
-    os.system('cls' if os.name == 'nt' else 'clear')
+    graphics.clrscrn()
     if x=='2':
       print(" __          __           _           _          ")
       print(" \ \        / /          | |         | |         ")
@@ -171,32 +171,32 @@ def equippedarmor():
           if y == '1':
             print(f"You de-equipped {equipped['helm']}")
             sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             equipped['helm'] = 'nothing'
           elif y == '2':
             print(f"You de-equipped {equipped['chestplate']}")
             sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             equipped['chestplate'] = 'nothing'
           elif y == '3':
             print(f"You de-equipped {equipped['vambraces']}")
             sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             equipped['vambraces'] = 'nothing'
           elif y == '4':
             print(f"You de-equipped {equipped['shield']}")
             sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             equipped['shield'] = 'nothing'
           elif y == '5':
             print(f"You de-equipped {equipped['leggings']}")
             sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             equipped['leggings'] = 'nothing'
           elif y == '6':
             print(f"You de-equipped {equipped['boots']}")
             sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
+            graphics.clrscrn()
             equipped['boots'] = 'nothing'
           else:
             print("Invalid Option!")
@@ -213,5 +213,5 @@ def equippedarmor():
     else:
         print("Invalid Option!")
     
-  os.system('cls' if os.name == 'nt' else 'clear')
+  graphics.clrscrn()
 

@@ -5,7 +5,7 @@ from time import sleep
 
 def tullius():
   from messages import tulliusdialogue
-  os.system('cls' if os.name == 'nt' else 'clear')
+  graphics.clrscrn()
   print("  _______    _ _ _            ")
   print(" |__   __|  | | (_)           ")
   print("    | |_   _| | |_ _   _ ___  ")
@@ -15,11 +15,11 @@ def tullius():
   print()
   print('Tullius: '+f'{choice(tulliusdialogue)}')
   input("Return to menu")
-  os.system('cls' if os.name == 'nt' else 'clear')
+  graphics.clrscrn()
   
 def gridprinter():
     from grid import mover, currentpos, gridA, gridB, gridC
-    choice(graphics.list_of_graphics)()
+    graphics.dungeon()
     print("\nCurrent Position:\n")
     if currentpos['grid'] == 'gridA':
         print(gridA[currentpos['pos']])
@@ -30,25 +30,26 @@ def gridprinter():
 
 
 def stats():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print("   _____ _        _        ")
-    print("  / ____| |      | |       ")
-    print(" | (___ | |_ __ _| |_ ___  ")
-    print("  \___ \| __/ _` | __/ __| ")
-    print("  ____) | || (_| | |_\__ \ ")
-    print(" |_____/ \__\__,_|\__|___/ ")
-    print()
+    graphics.clrscrn()
+    graphics.stat_ascii()
     import variables
     from variables import armordict,equipped
-    print(f'''HP = {variables.health['hp']}\nGold = {variables.money['gold']}\nSilver = {variables.money['silver']}\nEnemies defeated = {variables.stats['enemies']}\nXP = {variables.xp['xp']}\nLevel = {variables.xp['level']}\nXP need to levelup = {variables.xp['lvlnext']}\nMax Parry: {armordict['helm'][equipped['helm']][1]+armordict['chestplate'][equipped['chestplate']][1]+armordict['leggings'][equipped['leggings']][1]+armordict['boots'][equipped['boots']][1]+armordict['vambraces'][equipped['vambraces']][1]+armordict['shield'][equipped['shield']][1]}''')
-  
-    input("Return to menu")
-    os.system('cls' if os.name == 'nt' else 'clear')
+    graphics.print_centre(f"HP = {variables.health['hp']}")
+    graphics.print_centre(f"Gold = {variables.money['gold']}")
+    graphics.print_centre(f"Silver = {variables.money['silver']}")
+    graphics.print_centre(f"Enemies defeated = {variables.stats['enemies']}")
+    graphics.print_centre(f"XP = {variables.xp['xp']}")
+    graphics.print_centre(f"Level = {variables.xp['level']}")
+    graphics.print_centre(f"XP need to levelup = {variables.xp['lvlnext']}")
+    graphics.print_centre(f"Max Parry: {armordict['helm'][equipped['helm']][1]+armordict['chestplate'][equipped['chestplate']][1]+armordict['leggings'][equipped['leggings']][1]+armordict['boots'][equipped['boots']][1]+armordict['vambraces'][equipped['vambraces']][1]+armordict['shield'][equipped['shield']][1]}")
+    graphics.print_centre("Return to menu")
+    input()
+    graphics.clrscrn()
     
 
   
 def inventory():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    graphics.clrscrn()
     print('''  _____                      _                   
  |_   _|                    | |                  
    | |  _ ____   _____ _ __ | |_ ___  _ __ _   _ 
@@ -63,12 +64,12 @@ def inventory():
     from consumeitem import useitem
     useitem()
     input("Return to menu")
-    os.system('cls' if os.name == 'nt' else 'clear')
+    graphics.clrscrn()
 
 def shop():
     import variables
     while True:
-      os.system('cls' if os.name == 'nt' else 'clear')
+      graphics.clrscrn()
       
       print('''   _____ _                 
   / ____| |                
@@ -253,7 +254,8 @@ def shop():
 
 def menu():
     graphics.spacer()
-    cho = input(f"--- [WASD] Move [I] Inventory [V] Stats [M] Menu [Z] Armor [T] Tullius [B] Shop ---\n: ")
+    graphics.print_centre(f"--- [WASD] Move [I] Inventory [V] Stats [M] Menu [Z] Armor [T] Tullius [B] Shop ---")
+    cho=input(": ")
     if cho == "W" or cho == "w":
         from grid import mover
         mover(cho)
@@ -277,10 +279,10 @@ def menu():
         debugmenu()
     elif cho == "M" or cho == "m":
         import startsequence
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         startsequence.pausemenu()
         sleep(1)
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         gridprinter()
     elif cho == 'Z' or cho == 'z':
         from armory import equippedarmor
@@ -291,14 +293,14 @@ def menu():
         gridprinter()
     elif cho == 'B' or cho == 'b':
         shop()
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         gridprinter()
     elif cho == 'makemetherichestbch':
       import variables
       variables.money["silver"] += 10000
       variables.money["gold"]+=10000
-      os.system('cls' if os.name == 'nt' else 'clear')
+      graphics.clrscrn()
       gridprinter()
     else:
-        os.system('cls' if os.name == 'nt' else 'clear')
+        graphics.clrscrn()
         gridprinter()

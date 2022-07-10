@@ -5,116 +5,103 @@ import graphics
 from time import sleep
 import os
 
-def clrscrn():
-    os.system('cls' if os.name == 'nt' else 'clear')
+
     
 def xperience():
     if variables.enemyhp <= 0:
         if index == 1:
             variables.xp['xp'] += 20
-            print("You have gained 20 xp")
+            graphics.print_centre("  You have gained 20 xp")
         elif index == 2:
             variables.xp['xp'] += 40
-            print("You have gained 40 xp")
+            graphics.print_centre("  You have gained 40 xp")
         elif index == 3:
             variables.xp['xp'] += 60
-            print("You have gained 60 xp")
+            graphics.print_centre("  You have gained 60 xp")
         elif index == 4:
             variables.xp['xp'] += 80
-            print("You have gained 80 xp")
+            graphics.print_centre("  You have gained 80 xp")
         elif index == 5:
             variables.xp['xp'] += 100
-            print("You have gained 100 xp")     
+            graphics.print_centre("  You have gained 100 xp")     
         if variables.xp['xp'] >=variables.xp['lvlnext']:
           variables.xp['level']+=1
           variables.xp['xp']=variables.xp['xp']-variables.xp['lvlnext']
           variables.xp['lvlnext']=round(variables.xp['lvlnext']*variables.xp['modifier'])
-          print(f"You have levelled up to level {variables.xp['level']}")
+          graphics.print_centre(f"  You have levelled up to level {variables.xp['level']}")
           if variables.xp['level'] %10 == 0:
             variables.bonus['bonushp']+=10
-            print(f"You have levelled up to level {variables.xp['level']} and gained 10 bonus hp")
+            graphics.print_centre(f"  You have levelled up to level {variables.xp['level']} and gained 10 bonus hp")
   
 def villain():
     global enemyhp, enemyname
     global fight_switch
-    if index == 1:
-      loss = random.choice(variables.attackrange[1])
-    elif index == 2:
-      loss = random.choice(variables.attackrange[2])
-    elif index == 3:
-      loss = random.choice(variables.attackrange[3])
-    elif index == 4:
-      loss = random.choice(variables.attackrange[4])
-    elif index == 5:
-      loss = random.choice(variables.attackrange[5])
-      
+    loss = random.choice(variables.attackrange[index])
     variables.health['hp'] = variables.health['hp'] - loss
     return f"{enemyname} attacked you! You lost {loss} hp!"
     
-    
-
-
 def hero():
     global enemyhp, enemyname
     global fight_switch
     global run_switch
-    print("  ______ _       _     _   ")
-    print(" |  ____(_)     | |   | |  ")
-    print(" | |__   _  __ _| |__ | |_ ")
-    print(" |  __| | |/ _` | '_ \| __|")
-    print(" | |    | | (_| | | | | |_ ")
-    print(" |_|    |_|\__, |_| |_|\__|")
-    print("            __/ |          ")
-    print("           |___/           ")
-
-    print(f"\nPlayer HP = {variables.health['hp']}\t\t\t{enemyname} HP = {enemyhp}\n")
+    graphics.print_centre("  ______ _       _     _   ")
+    graphics.print_centre(" |  ____(_)     | |   | |  ")
+    graphics.print_centre(" | |__   _  __ _| |__ | |_ ")
+    graphics.print_centre(" |  __| | |/ _` | '_ \| __|")
+    graphics.print_centre(" | |    | | (_| | | | | |_ ")
+    graphics.print_centre(" |_|    |_|\__, |_| |_|\__|")
+    graphics.print_centre("            __/ |          ")
+    graphics.print_centre("           |___/           ")
+    print()
+    graphics.print_centre(f"Player HP = {variables.health['hp']}\t{enemyname} HP = {enemyhp}")
+    print()
     try:
-        inp = int(
-            input(
-                "-- FIGHT --\n1)Attack 2)Defend 3)Use consumables 4)Run Away\n: "
-            ))
+        graphics.print_centre("-- FIGHT --")
+        graphics.print_centre("| 1)Attack 2)Defend 3)Use consumables 4)Run Away |")
+        graphics.print_centre("--------------------------------------------------")
+        inp = int(input(": "))
         if inp == 4:
             run_switch = 1
+            graphics.print_centre("--------- LOG ---------")
             return f"You have escaped from {enemyname}"
         elif inp == 3:
+            print("--- Fight Inventory --")
             if len(variables.consumables) > 0:
                 for item in variables.consumables:
                     print(f'{item} : {variables.consumables[item]}')
                 from consumeitem import useitemduringfight
                 return useitemduringfight()
             else:
-
+                graphics.print_centre("--------- LOG ---------")
                 return "You have no consumables you can use!"
-
-
         elif inp == 2:
             parryvalues = choice(variables.armordict['helm'][variables.equipped['helm']][0])+choice(variables.armordict['chestplate'][variables.equipped['chestplate']][0])+choice(variables.armordict['leggings'][variables.equipped['leggings']][0])+choice(variables.armordict['boots'][variables.equipped['boots']][0])+choice(variables.armordict['vambraces'][variables.equipped['vambraces']][0])+choice(variables.armordict['shield'][variables.equipped['shield']][0])
             if parryvalues == 0:
               parryvalues = choice(range(1,11))
             if variables.health['hp'] + parryvalues < variables.health['hplimit']:
                 variables.health['hp'] += parryvalues
-
-                return f"You parried and regained {parryvalues} hp\n"
+                graphics.print_centre("--------- LOG ---------")
+                return f"You parried and regained {parryvalues} hp"
             else:
                 variables.health['hp'] = variables.health['hplimit']
-
-                return f"You parried and regained all of your hp\n"
+                graphics.print_centre("--------- LOG ---------")
+                return f"You parried and regained all of your hp"
 
         elif inp == 1:
             e = random.randint(10,50)
             if enemyhp - e > 0:
                 enemyhp -= e
-          
-                return f"You attacked the {enemyname}! {enemyname} lost {e} hp\n"
+                graphics.print_centre("--------- LOG ---------")
+                return f"You attacked the {enemyname}! {enemyname} lost {e} hp"
             else:
                 enemyhp = 0
-
-                return f"You attacked the {enemyname}! {enemyname} lost all of their hp\n"
+                graphics.print_centre("--------- LOG ---------")
+                return f"You attacked the {enemyname}! {enemyname} lost all of their hp"
         fight_switch = 0
     except ValueError as ve:
         print("Invalid option! Choose again!")
         sleep(1)
-        clrscrn()
+        graphics.clrscrn()
         hero()
 
 def encounter():
@@ -138,89 +125,86 @@ def encounter():
     enemyname = random.choice(variables.enemies[index])
     enemyhp = variables.loot[index][0]
     coin = variables.loot[index][2]
-    clrscrn()
-    print(f"{enemyname}\nHP:{enemyhp}")
-    print("        __      _______ ")     
-    print("        \ \    / / ____|")
-    print("         \ \  / / (___  ")
-    print("          \ \/ / \___ \ ")
-    print("           \  /  ____) |")       
-    print("            \/  |_____/ ")
-    print("                          Player")
-    print(f"                          HP:{variables.health['hp']}")
+    graphics.clrscrn()
+    graphics.print_centre(f"        __      _______     {enemyname}")     
+    graphics.print_centre(f"        \ \    / / ____|    HP:{enemyhp}")
+    graphics.print_centre(f"    \ \  / / (___      ")
+    graphics.print_centre(f"     \ \/ / \___ \     ")
+    graphics.print_centre(f"           \  /  ____) |    Player")       
+    graphics.print_centre(f"            \/  |_____/     HP:{variables.health['hp']}")
+
     sleep(2)
     if fight_switch == 1:
-      clrscrn()
+      graphics.clrscrn()
     elif fight_switch == 0:
-        print('--- Log ---')
-
+        print()
+        graphics.print_centre('--------- LOG ---------')
     while enemyhp > 0 and variables.health['hp'] > 0:
         global run_switch
         if run_switch == 0:
- 
             if fight_switch == 0:
-                print(f'Enemy: {villain()}')
+                graphics.print_centre(f'Enemy: {villain()}')
+                graphics.print_centre("-------------------")
                 fight_switch = 1
                 sleep(2)
-                clrscrn()
+                graphics.clrscrn()
             elif fight_switch == 1:
-                print(f'\n--- Log ---\nPlayer: {hero()}')
+                graphics.print_centre(f'Player: {hero()}')
                 fight_switch = 0
                 sleep(2)
             
         else:
             sleep(2)
-            clrscrn()
+            graphics.clrscrn()
             from playerhud import gridprinter
             gridprinter()
             run_switch = 0
             break
 
         if enemyhp <= 0:
-            clrscrn()
-            print(''' __     __          __          ___       
- \ \   / /          \ \        / (_)      
-  \ \_/ /__  _   _   \ \  /\  / / _ _ __  
-   \   / _ \| | | |   \ \/  \/ / | | '_ \ 
-    | | (_) | |_| |    \  /\  /  | | | | |
-    |_|\___/ \__,_|     \/  \/   |_|_| |_|
-                                          
-                                          ''')
-            print(f"You have successfully defeated {enemyname}")
-            print("-------------------------------------------")
+            graphics.clrscrn()
+            graphics.print_centre("__     __          __          ___ ")
+            graphics.print_centre("\ \   / /          \ \        / (_) ")     
+            graphics.print_centre("      \ \_/ /__  _   _   \ \  /\  / / _ _ __ ")  
+            graphics.print_centre("       \   / _ \| | | |   \ \/  \/ / | | '_ \ ")
+            graphics.print_centre("         | | (_) | |_| |    \  /\  /  | | | | | ")
+            graphics.print_centre("         |_|\___/ \__,_|     \/  \/   |_|_| |_| ")
+            print()
+            graphics.print_centre(f"  You have successfully defeated {enemyname}")
+            graphics.print_centre("  -------------------------------------------")
             if index != 6:
               variables.stats['enemies'] += 1
               variables.money['silver'] = variables.money['silver'] + coin
-              print(f"You gained {coin} Silver!")
+              graphics.print_centre(f"  You gained {coin} Silver!")
             else:
               variables.stats['enemies'] += 1
               variables.stats['bosses'] += 1
               variables.money['silver'] = variables.money['silver'] + coin
               variables.money['gold'] = variables.money['gold'] + 10
-              print(f"You gained {coin} Silver and 10 Gold!")
+              graphics.print_centre(f"  You gained {coin} Silver and 10 Gold!")
               
             xperience()
-            print("-------------------------------------------")
+            graphics.print_centre("  -------------------------------------------")
             sleep(2)
-            clrscrn()
+            graphics.clrscrn()
             from playerhud import gridprinter
             gridprinter()
             break
 
         elif variables.health['hp'] <= 0:
-            print(f"You have been killed by {enemyname}")
+            graphics.print_centre(f"You have been killed by {enemyname}")
             coinlose = random.choice(list(range(1,16)))
             variables.money['silver'] = variables.money['silver'] - coinlose
             
             variables.health['hp'] = variables.health['hplimit']
-            print("-----------------------------------------------------------------")
-            print(
+            graphics.print_centre("-----------------------------------------------------------------")
+            graphics.print_centre(
                 f"You were slain by {enemyname} ! You take cover to heal completely!"
             )
-            print(f"You lost {coinlose} coins!")
-            print("-----------------------------------------------------------------")
+            graphics.print_centre(f"You lost {coinlose} coins!")
+            graphics.print_centre("-----------------------------------------------------------------")
             sleep(2)
-            clrscrn()
+            graphics.clrscrn()
             from playerhud import gridprinter
             gridprinter()
             break
