@@ -75,7 +75,7 @@ def save():
       with open(filename,'w') as file_object:
         json.dump(data,file_object)
         print("Save succeeded")
-    else:
+    elif y==2:
       print("Cancelling save process!")
   else:
     with open(filename,'w') as file_object:
